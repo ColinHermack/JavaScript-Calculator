@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#parent-div {
+  margin-top: 150px; /* FIXME center this */
+}
+
+#display {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 300px;
+  height: 75px;
+  padding: 0;
+  background-color: rgb(40, 40, 40);
+  color: white;
+  font-size: 2.5em;
+}
+
+#display-content {
+  padding-right: 5px;
+  padding-bottom: 5px;
+  text-align: right;
+  width: 100%;
+}
+
+#keypad {
+  background-color: black;
+  width: 300px;
+  height: 350px;
+  border-collapse: collapse;
+}
+
+#keypad td {
+  min-width: 75px;
+  padding: 0;
+}
+
+button {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0px;
+  font-size: 1.8em;
+  color: white;
+  border-top: 1px solid rgb(40, 40, 40);
+  border-right: 1px solid black;
+}
+
+.operation-key {
+  background-color: orange;
+  border-right: 0;
+}
+
+.top-key {
+  background-color: rgb(75, 75, 75);
+}
+
+.normal-key {
+  background-color: rgb(110, 110, 110);
+}
+
+.operation-key:active {
+  background-color: darkorange;
+}
+
+.top-key:active {
+  background-color: rgb(110, 110, 110);
+}
+
+.normal-key:active {
+  background-color: rgb(170, 170, 170);
+}
+
+#zero {
+  width: 200%;
+}
+
+#decimal {
+  position: relative;
+  left: 75px;
+}
+
+#equals {
+  position: relative;
+  left: 75px;
+}
