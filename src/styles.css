@@ -85,17 +85,3 @@ button {
 .normal-key:active {
   background-color: rgb(170, 170, 170);
 }
-
-#zero {
-  width: 200%;
-}
-
-#decimal {
-  position: relative;
-  left: 75px;
-}
-
-#equals {
-  position: relative;
-  left: 75px;
-}

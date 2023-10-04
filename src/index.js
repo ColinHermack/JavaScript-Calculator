@@ -17,9 +17,11 @@ class App extends React.Component {
     this.handleSignChange = this.handleSignChange.bind(this);
   }
 
+  //Handle a normal number key
   handleNumberClick(event) {
-    if (this.state.displayContent.length < 11) {
-      if (this.state.displayContent === '0') {
+    if (this.state.displayContent.length < 11) {  //Only add numbers if the length is less than 11 digits
+      //If the display content equals 0, replace it with the input, unless it is a decimal
+      if (this.state.displayContent === '0') {  
         if (event.target.innerText === '.') {
           this.setState((oldState) => ({
             displayContent: (oldState.displayContent + event.target.innerText)
@@ -27,12 +29,14 @@ class App extends React.Component {
         } else {
           this.setState({displayContent: event.target.innerText})
           }
-      } else if (this.state.displayContent[this.state.displayContent.length - 1] === '.') {
+      //If display content contains a decimal, don't allow another decimal to be added
+      } else if (this.state.displayContent.indexOf('.') !== -1) {
           if (event.target.innerText !== '.') {
             this.setState((oldState) => ({
               displayContent: (oldState.displayContent + event.target.innerText)
               }))
           }
+      //Otherwise allow any numeral to be added to the end of the string
       } else {
         this.setState((oldState) => ({
           displayContent: (oldState.displayContent + event.target.innerText)
@@ -41,13 +45,14 @@ class App extends React.Component {
     }
   }
     
-
+  //When the AC button is clicked, return the display content to 0
   handleClear() {
     this.setState({
       displayContent: '0'
     })
   }
 
+  //If the percent button is clicked, divide by 100
   handlePercent() {
     let temp = Number(this.state.displayContent);
     temp /= 100;
@@ -55,6 +60,7 @@ class App extends React.Component {
     this.setState({displayContent: String(temp)});
   }
 
+  //If the sign change button is clicked, add or remove a negative sign from the front of the display content
   handleSignChange() {
     console.log("RAN");
     if (this.state.displayContent !== '0') {
@@ -101,6 +107,7 @@ class App extends React.Component {
               <td><button id='add' className='operation-key'>+</button></td>
             </tr>
             <tr>
+              <td><button className='normal-key'></button></td>
               <td><button id='zero' className='normal-key' onClick={this.handleNumberClick}>0</button></td>
               <td><button id='decimal' className='normal-key' onClick={this.handleNumberClick}>.</button></td>
               <td><button id='equals' className='operation-key'>=</button></td>
