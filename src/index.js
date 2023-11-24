@@ -69,13 +69,11 @@ class App extends React.Component {
   handlePercent() {
     let temp = Number(this.state.displayContent);
     temp /= 100;
-    console.log(temp);
     this.setState({displayContent: String(temp)});
   }
 
   //If the sign change button is clicked, add or remove a negative sign from the front of the display content
   handleSignChange() {
-    console.log("RAN");
     if (this.state.displayContent !== '0') {
       if (this.state.displayContent[0] === '-') {
         this.setState((oldState) => ({
@@ -95,22 +93,46 @@ class App extends React.Component {
         queueDisplay: ''
       })
     }
+    if (this.state.displayContent === '0' && event.target.innerText !== '-') {
+          var newQueue = this.state.queue;
+          newQueue.pop();
+          this.setState((oldState) => ({
+            queue: newQueue.concat(event.target.innerText),
+            queueDisplay: oldState.queueDisplay.slice(0, oldState.queueDisplay.length - 1),
+          }));
+    }
+    if (this.state.displayContent === '-') {
+      var newQueue = this.state.queue;
+          newQueue.pop();
+          this.setState((oldState) => ({
+            queue: newQueue.concat(event.target.innerText),
+            queueDisplay: oldState.queueDisplay.slice(0, oldState.queueDisplay.length - 1),
+            displayContent: ''
+          }));
+    }
     if (event.target.innerText === '+') {
         this.setState((oldState) => ({
           queue: oldState.queue.concat(oldState.displayContent).concat("+"),
           queueDisplay: oldState.queueDisplay.concat(oldState.displayContent).concat("+"),
           displayContent: "0"
-        }))
+        }))    
     } else if (event.target.innerText === '-') {
-      this.setState((oldState) => ({
-        queue: oldState.queue.concat(oldState.displayContent).concat("-"),
-        queueDisplay: oldState.queueDisplay.concat(oldState.displayContent).concat("-"),
-        displayContent: "0"
-      }))
+      if (this.state.displayContent == '0') {
+        this.setState({
+          displayContent: "-"
+        })
+      } else {
+        this.setState((oldState) => ({
+          queue: oldState.queue.concat(oldState.displayContent).concat("-"),
+          queueDisplay: oldState.queueDisplay.concat(oldState.displayContent).concat("-"),
+          displayContent: "0"
+        }))
+      }
+      
     } else if (event.target.innerText === 'x') {
       this.setState((oldState) => ({
         queue: oldState.queue.concat(oldState.displayContent).concat("x"),
-        queueDisplay: oldState.queueDisplay.concat(oldState.displayContent).concat("x"),
+        queueDisplay: oldState.queueDisplay.concat(oldState.displayContent).concat("*"),
         displayContent: "0"
       }))
     } else if (event.target.innerText === '\u00F7') {
@@ -123,11 +145,10 @@ class App extends React.Component {
   }
 
   handleEquals() {
-    //Update the queue with whatever is on the display
-    this.setState((oldState) => ({
-      queue: oldState.queue.concat(oldState.displayContent),
-    }));
+    //Get whatever is already queued up in the state and add whatever is currently in the display
     var queue = this.state.queue.slice();
+    queue.push(this.state.displayContent);
+
     //Perform multiplication and division first
     while (true) {
       var solved = true;
@@ -141,7 +162,6 @@ class App extends React.Component {
           queue[i - 1] = Number(queue[i - 1]) / Number(queue[i + 1]);
           queue.splice(i, 2);
         }
-        console.log(queue);
       }
       if (solved) {
         break;
@@ -161,7 +181,6 @@ class App extends React.Component {
           queue[i - 1] = Number(queue[i - 1]) - Number(queue[i + 1]);
           queue.splice(i, 2);
         }
-        console.log(queue);
       }
       if (solved) {
         break;
@@ -169,7 +188,7 @@ class App extends React.Component {
     }
 
     this.setState({
-      displayContent: queue[0],
+      displayContent: String(queue[0]),
       queue: [],
       queueDisplay: '0'
     })
